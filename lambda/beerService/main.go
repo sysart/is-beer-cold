@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 // Item is interface when getting dynamo data
@@ -20,6 +21,7 @@ type Item struct {
 	Value float64 `json:"value"`
 }
 
+// ResponseJSON stuct which will sent back
 type ResponseJSON struct {
 	Times  []string  `json:"times"`
 	Values []float64 `json:"values"`
@@ -90,8 +92,5 @@ func Handler() (events.APIGatewayProxyResponse, error) {
 }
 
 func main() {
-	fmt.Println("Run main")
-
-	// lambda.Start(Handler)
-	Handler()
+	lambda.Start(Handler)
 }
