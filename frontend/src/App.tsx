@@ -38,10 +38,27 @@ class App extends React.Component<IProps, IState> {
     }
   }
   public componentDidMount() {
+    this.setNotification();
     this.fetchData();
     setInterval(() => {
       this.fetchData();
     }, 1 * 60 * 1000) // 1 minute
+  }
+
+  public setNotification = async () => {
+    const permission = await Notification.requestPermission();
+
+    // tslint:disable-next-line:no-console
+    console.log("per", permission)
+
+  }
+
+  public spawnNotification(body: string, icon: string, title: string) {
+    const options = {
+      body,
+      icon
+    };
+    return new Notification(title, options);
   }
 
   public fetchData = async () => {
@@ -59,6 +76,11 @@ class App extends React.Component<IProps, IState> {
       } = response;
       const lastTemp = response.values[response.values.length - 1];
       const isCold = lastTemp < 9.5;
+
+      if (!this.state.isCold && isCold) {
+        this.spawnNotification("kalja on nyt kylmää!", "", "Kalja status update!")
+      }
+
 
       this.setState({
         isCold,
