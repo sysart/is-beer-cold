@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Footer } from 'src/Footer';
 import { Header } from 'src/Header';
 import { History } from "src/History"
 import { Status } from 'src/Status';
@@ -79,6 +80,7 @@ class App extends React.Component<IProps, IState> {
             <History history={this.state.temps} />
           </>
         )}
+        <Footer />
       </div>
     );
   }
