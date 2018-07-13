@@ -46,11 +46,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   public setNotification = async () => {
-    const permission = await Notification.requestPermission();
-
-    // tslint:disable-next-line:no-console
-    console.log("per", permission)
-
+    Notification.requestPermission();
   }
 
   public spawnNotification(body: string, icon: string, title: string) {
