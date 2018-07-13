@@ -75,12 +75,15 @@ export class History extends Component<IProps, {}> {
       ]
     };
 
-    const options = {
+    const options: Chart.ChartOptions = {
+      legend: {
+        display: false
+      },
       scales: {
         yAxes: [{
           display: true,
           ticks: {
-            max: Math.max(...history.values) + 2,
+            max: Math.ceil(Math.max(...history.values) + 2),
             min: 0,
           }
         }]

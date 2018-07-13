@@ -5,6 +5,7 @@ const Title = styled.header`
   background: black;
   color: white;
   position: sticky;
+  padding: 10px 0px;
   top: 0;
   h1{
     margin: 0;
@@ -13,7 +14,6 @@ const Title = styled.header`
       padding: 10px 0px;
     }
   }
-
 `
 
 export const Header = () => (
