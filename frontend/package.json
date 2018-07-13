@@ -1,0 +1,29 @@
+{
+  "name": "isbeercold",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^1.3.1",
+    "chart.js": "^2.7.2",
+    "react": "^16.4.1",
+    "react-chartjs-2": "^2.7.2",
+    "react-dom": "^16.4.1",
+    "react-scripts-ts": "2.16.0",
+    "styled-components": "^3.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "deploy": "yarn run build && aws s3 sync --acl public-read build/ s3://kalja.sysart.io"
+  },
+  "devDependencies": {
+    "@types/chart.js": "^2.7.27",
+    "@types/jest": "^23.1.4",
+    "@types/node": "^10.5.2",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "typescript": "^2.9.2"
+  }
+}
