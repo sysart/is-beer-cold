@@ -46,15 +46,24 @@ class App extends React.Component<IProps, IState> {
   }
 
   public setNotification = async () => {
-    Notification.requestPermission();
+    if (!("Notification" in window)) {
+      return null;
+    }
+
+    return Notification.requestPermission();
+
   }
 
   public spawnNotification(body: string, icon: string, title: string) {
+    if (!("Notification" in window)) {
+      return null;
+    }
     const options = {
       body,
       icon
     };
     return new Notification(title, options);
+
   }
 
   public fetchData = async () => {
