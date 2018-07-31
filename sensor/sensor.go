@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -12,9 +13,10 @@ import (
 
 // Sensor is interface for temp sensor
 type Sensor struct {
-	Name  string  `json:name`
-	Value float64 `json:temp`
-	Time  int64   `json:time`
+	Name  string  `json:"Name"`
+	Value float64 `json:"Temp"`
+	Time  int64   `json:"Time"`
+	TTL   int64   `json:"ttl"`
 }
 
 var tempDeviceFolder = "/sys/bus/w1/devices/"
@@ -24,7 +26,7 @@ var sensors []Sensor
 
 // FindSensors will find temp sensors from Pi file system
 func FindSensors(sensors *[]Sensor) {
-
+	fmt.Println("Find sensors")
 	files, err := ioutil.ReadDir(tempDeviceFolder)
 	if err != nil {
 		log.Fatal(err)
@@ -39,6 +41,7 @@ func FindSensors(sensors *[]Sensor) {
 				Name:  f.Name(),
 				Value: 0.0,
 				Time:  time.Now().Unix(),
+				TTL:   0,
 			},
 			)
 		}
@@ -59,7 +62,7 @@ func ReadTemps() []Sensor {
 
 // ReadTemp will read temp as int from sensor path
 func ReadTemp(sensor *Sensor) {
-
+	fmt.Println("Read temp")
 	file, err := os.Open(tempDeviceFolder + sensor.Name + "/" + tempFileName)
 	if err != nil {
 		log.Fatal(err)
@@ -80,6 +83,11 @@ func ReadTemp(sensor *Sensor) {
 				}
 				sensor.Value = float64(temp) / 1000
 				sensor.Time = time.Now().Unix()
+				sensor.TTL = time.Now().Add(
+					time.Hour * time.Duration(48),
+				).Unix()
+
+				fmt.Println("set temp", sensor)
 			}
 		}
 	}

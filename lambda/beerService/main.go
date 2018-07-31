@@ -17,8 +17,8 @@ import (
 
 // Item is interface when getting dynamo data
 type Item struct {
-	Time  int64   `json:"time"`
-	Value float64 `json:"value"`
+	Time int64   `json:"time"`
+	Temp float64 `json:"temp"`
 }
 
 // ResponseJSON stuct which will sent back
@@ -53,8 +53,6 @@ func Handler() (events.APIGatewayProxyResponse, error) {
 	var res []Item
 	err = dynamodbattribute.UnmarshalListOfMaps(result.Items, &res)
 
-	fmt.Println(len(result.Items))
-
 	var times []string
 	var values []float64
 
@@ -64,12 +62,18 @@ func Handler() (events.APIGatewayProxyResponse, error) {
 		t := time.Unix(res[i].Time, 0).In(loc)
 		times = append(times, t.Format("15:04"))
 
-		values = append(values, res[i].Value)
+		values = append(values, res[i].Temp)
+	}
+
+	// Limit must be positive
+	limit := len(values) - 120
+	if limit < 0 {
+		limit = 0
 	}
 
 	r, _ := json.Marshal(ResponseJSON{
-		Values: values[len(values)-120:],
-		Times:  times[len(times)-120:],
+		Values: values[limit:],
+		Times:  times[limit:],
 	})
 
 	if json.Valid(r) {
@@ -93,4 +97,5 @@ func Handler() (events.APIGatewayProxyResponse, error) {
 
 func main() {
 	lambda.Start(Handler)
+	// Handler()
 }

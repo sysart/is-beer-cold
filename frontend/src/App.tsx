@@ -82,7 +82,7 @@ class App extends React.Component<IProps, IState> {
       const lastTemp = response.values[response.values.length - 1];
       const isCold = lastTemp < 9.5;
 
-      if (!this.state.isCold && isCold) {
+      if (this.state.loaded && !this.state.isCold && isCold) {
         this.spawnNotification("kalja on nyt kylmää!", "", "Kalja status update!")
       }
 
