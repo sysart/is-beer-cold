@@ -18,7 +18,7 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "deploy": "yarn run build && aws s3 sync --acl public-read build/ s3://kalja.sysart.io"
+    "deploy": "./deploy.sh"
   },
   "devDependencies": {
     "@types/chart.js": "^2.7.27",
