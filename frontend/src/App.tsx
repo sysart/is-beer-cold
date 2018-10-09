@@ -85,7 +85,7 @@ class App extends React.Component<IProps, IState> {
         values: number[];
       } = response;
       const lastTemp = response.values[response.values.length - 1];
-      const isCold = lastTemp < 9.5;
+      const isCold = lastTemp < 11.5;
 
       if (this.state.loaded && !this.state.isCold && isCold) {
         this.spawnNotification(
